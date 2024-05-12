@@ -1,3 +1,7 @@
 ﻿using LandingsParser;
+using System.IO;
 
-Console.WriteLine("helloworld!");
+CSVParser parser = new CSVParser();
+parser.parseCSV("../../../Meteorite_Landings.csv");
+
+Console.WriteLine("");
