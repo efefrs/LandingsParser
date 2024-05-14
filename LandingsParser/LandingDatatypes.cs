@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace LandingsParser
 {
-    public struct Pair {
-        public double x;
-        public double y;
+    // using nullable values because int and double inputs could be negative values
+    // wanted to use -1 as placeholder for empty inputs but since that could be the geolocation, reclat, etc
+    // null is the only way to depict a ",," entry correctly
+    public struct GeoLocationPair {
+        public Nullable<double> x;
+        public Nullable<double> y;
 
-        public Pair(double x, double y)
+        public GeoLocationPair(Nullable<double> x, Nullable<double> y)
         {
             this.x = x;
             this.y = y;
@@ -20,18 +23,18 @@ namespace LandingsParser
     public struct MeteoriteLanding
     {
         public string name;
-        public int id;
+        public Nullable<int> id;
         public string nametype;
         public string recclass;
-        public int mass;
+        public Nullable<double> mass;
         public string fall;
-        public int year;
-        public double reclat;
-        public double reclong;
-        public Pair GeoLocation;
+        public Nullable<int> year;
+        public Nullable<double> reclat;
+        public Nullable<double> reclong;
+        public GeoLocationPair GeoLocation;
 
-        public MeteoriteLanding(string name, int id, string nametype, string recclass, 
-            int mass, string fall, int year, double reclat, double reclong, Pair Geolocation)
+        public MeteoriteLanding(string name, Nullable<int> id, string nametype, string recclass,
+            Nullable<double> mass, string fall, Nullable<int> year, Nullable<double> reclat, Nullable<double> reclong, GeoLocationPair Geolocation)
         {
             this.name = name;
             this.id = id;
@@ -43,6 +46,20 @@ namespace LandingsParser
             this.reclat = reclat;
             this.reclong = reclong;
             this.GeoLocation = Geolocation;
+        }
+
+        public MeteoriteLanding()
+        {
+            this.name = "";
+            this.id = null;
+            this.nametype = "";
+            this.recclass = "";
+            this.mass = null;
+            this.fall = "";
+            this.year = null;
+            this.reclat = null;
+            this.reclong = null;
+            this.GeoLocation = new GeoLocationPair(null,null);
         }
     }
 }
