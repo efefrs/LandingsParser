@@ -7,3 +7,6 @@ CSVParser parser = new CSVParser();
 // which is why we are using '../../../' in our filename string to move back three folders.
 // please note this may be different on your device
 parser.parseCSV("../../../Meteorite_Landings.csv");
+
+LandingObservations observer = new LandingObservations();
+observer.observe(parser.getData());
