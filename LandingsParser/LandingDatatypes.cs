@@ -20,12 +20,28 @@ namespace LandingsParser
         }
     }
 
+    // Googling a few of the different inputs such as "Iron, IIAB"
+    // "Iron, IVA" and "Pallasite, PMG-an" will show that 
+    // the two value recclass inputs are "metal, type"
+    // while the one value recclass inputs are just 'type'
+    public struct RecclassPair
+    {
+        public string metal;
+        public string type;
+
+        public RecclassPair(string metal, string type)
+        {
+            this.metal = metal;
+            this.type = type;
+        }
+    }
+
     public struct MeteoriteLanding
     {
         public string name;
         public Nullable<int> id;
         public string nametype;
-        public string recclass;
+        public RecclassPair recclass;
         public Nullable<double> mass;
         public string fall;
         public Nullable<int> year;
@@ -33,7 +49,7 @@ namespace LandingsParser
         public Nullable<double> reclong;
         public GeoLocationPair GeoLocation;
 
-        public MeteoriteLanding(string name, Nullable<int> id, string nametype, string recclass,
+        public MeteoriteLanding(string name, Nullable<int> id, string nametype, RecclassPair recclass,
             Nullable<double> mass, string fall, Nullable<int> year, Nullable<double> reclat, Nullable<double> reclong, GeoLocationPair Geolocation)
         {
             this.name = name;
@@ -53,7 +69,7 @@ namespace LandingsParser
             this.name = "";
             this.id = null;
             this.nametype = "";
-            this.recclass = "";
+            this.recclass = new RecclassPair("", "");
             this.mass = null;
             this.fall = "";
             this.year = null;
