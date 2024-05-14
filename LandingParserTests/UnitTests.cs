@@ -101,5 +101,38 @@ namespace LandingParserTests
                 Assert.Fail();
             }
         }
+
+        [Test]
+        public void TestObservations()
+        {
+            // normal case
+            CSVParser normalParser = new CSVParser();
+            normalParser.parseCSV("../../../normal.csv");
+            LandingObservations normalObserver = new LandingObservations(normalParser.getData());
+            //  || normalObserver.mostCommonMetal().Value != 0 || normalObserver.leastCommonMetal().Value != 0
+            if (normalObserver.stoneCount() != 2)
+            {
+                Assert.Fail();
+            }
+
+            // boundary case
+            CSVParser boundaryParser = new CSVParser();
+            boundaryParser.parseCSV("../../../boundary.csv");
+            LandingObservations boundaryObserver = new LandingObservations(boundaryParser.getData());
+            if (boundaryObserver.stoneCount() != 0 || boundaryObserver.mostCommonMetal().Key != "Iron" || boundaryObserver.mostCommonMetal().Value != 2 
+                || boundaryObserver.leastCommonMetal().Key != "Pallasite" || boundaryObserver.leastCommonMetal().Value != 1)
+            {
+                Assert.Fail();
+            }
+
+            // overflow case
+            CSVParser overflowParser = new CSVParser();
+            overflowParser.parseCSV("../../../overflow.csv");
+            LandingObservations overflowObserver = new LandingObservations(overflowParser.getData());
+            if (overflowObserver.stoneCount() != 2)
+            {
+                Assert.Fail();
+            }
+        }
     }
 }

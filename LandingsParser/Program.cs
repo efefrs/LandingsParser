@@ -8,5 +8,8 @@ CSVParser parser = new CSVParser();
 // please note this may be different on your device
 parser.parseCSV("../../../Meteorite_Landings.csv");
 
-LandingObservations observer = new LandingObservations();
-observer.observe(parser.getData());
+LandingObservations observer = new LandingObservations(parser.getData());
+observer.observations();
+
+/* If you want to print all of the landings uncomment the line below: */
+//observer.printLandings();

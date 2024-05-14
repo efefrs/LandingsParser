@@ -1,2 +1,4 @@
 ﻿name,id,nametype,recclass,mass (g),fall,year,reclat,reclong,GeoLocation
 Zhaoping,54609,Valid,"Iron, IAB complex",2000000,Found,1983,24.233330,111.183330,"(24.23333, 111.18333)"
+Mazapil,15453,Valid,"Iron, IAB-sLL",4000,Fell,1885,24.683330,-101.683330,"(24.68333, -101.68333)"
+Marjalahti,15426,Valid,"Pallasite, PMG",45000,Fell,1902,61.500000,30.500000,"(61.5, 30.5)"

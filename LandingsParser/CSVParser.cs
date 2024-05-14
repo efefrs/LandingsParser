@@ -11,7 +11,9 @@ namespace LandingsParser
 {
     public class CSVParser
     {
-        public List<MeteoriteLanding> Landings = new List<MeteoriteLanding>();
+        // opted to have parseCSV as a separate function instead of called in constructor
+        // in case we choose to parse multiple files (they'll just get added to the Landings list)
+        private List<MeteoriteLanding> Landings = new List<MeteoriteLanding>();
         
         public List<MeteoriteLanding> getData()
         {
@@ -82,7 +84,7 @@ namespace LandingsParser
 
 
                          */
-                        if (!String.Equals(value, "")) // case for non-blank field
+                        if (!(value == "")) // case for non-blank field
                         {
                             if(landingValueCount == 3 && values.Length == 2) // if "metal, type" case such as
                                                                              // "Iron, IIAB" we need to
@@ -146,9 +148,9 @@ namespace LandingsParser
                                     break;
                             }
                             landingValueCount++;
-                        } else if (String.Equals(value, "") && 
+                        } else if ((value == "") && 
                             ((clusterValueCounter != 0 && clusterValueCounter != values.Length - 1) 
-                            || (landingValueCount == 4 && String.Equals(temp.recclass, "Unknown")))) 
+                            || (landingValueCount == 4 && (temp.recclass.type == "Unknown")))) 
                             // blank valid field checks
                         {
                             landingValueCount++;
@@ -158,6 +160,7 @@ namespace LandingsParser
                 }
                 Landings.Add(temp);
             }
+
         }
     }
 }

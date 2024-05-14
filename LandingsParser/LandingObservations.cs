@@ -9,21 +9,25 @@ namespace LandingsParser
 {
     public class LandingObservations
     {
+        List<MeteoriteLanding> Landings;
+        public LandingObservations(List<MeteoriteLanding> Landings) {
+            this.Landings = new List<MeteoriteLanding>(Landings);
+        }
 
         // takes a list of meteorite landings (most likely parsed from a file)
         // and makes observations that are printed to console based off that data
-        public void observe(List<MeteoriteLanding> Landings)
+        public void observations()
         {
-            KeyValuePair<string, int> commonMetal = mostCommonMetal(Landings);
+            KeyValuePair<string, int> commonMetal = mostCommonMetal();
             Console.WriteLine("The most common metal in the given data is " + commonMetal.Key + " with a total of " + commonMetal.Value + " instances\n");
 
-            KeyValuePair<string, int> uncommonMetal = leastCommonMetal(Landings);
+            KeyValuePair<string, int> uncommonMetal = leastCommonMetal();
             Console.WriteLine("The least common metal in the given data is " + uncommonMetal.Key + " with a total of " + uncommonMetal.Value + " instances\n");
 
-            Console.WriteLine("The amount of non-metal (i.e. stone) meteors in the given data is " + stoneCount(Landings));
+            Console.WriteLine("The amount of non-metal (i.e. stone) meteors in the given data is " + stoneCount());
         }
 
-        private KeyValuePair<string, int> mostCommonMetal(List<MeteoriteLanding> Landings)
+        public KeyValuePair<string, int> mostCommonMetal()
         {
             Dictionary<string, int> metalCount = new Dictionary<string, int>();
             foreach(MeteoriteLanding Landing in Landings)
@@ -47,7 +51,7 @@ namespace LandingsParser
             return commonMetal;
         }
 
-        private KeyValuePair<string, int> leastCommonMetal(List<MeteoriteLanding> Landings)
+        public KeyValuePair<string, int> leastCommonMetal()
         {
             Dictionary<string, int> metalCount = new Dictionary<string, int>();
             foreach (MeteoriteLanding Landing in Landings)
@@ -70,7 +74,7 @@ namespace LandingsParser
             return uncommonMetal;
         }
 
-        private int stoneCount(List<MeteoriteLanding> Landings)
+        public int stoneCount()
         {
             int stoneCount = 0;
             foreach (MeteoriteLanding Landing in Landings)
@@ -83,6 +87,23 @@ namespace LandingsParser
             return stoneCount;
         }
 
+        public void printLandings()
+        {
+            internalPrintLandings(Landings);
+        }
 
+        private void internalPrintLandings(List<MeteoriteLanding> Landings)
+        {
+            foreach (MeteoriteLanding landing in Landings)
+            {
+                if (landing.recclass.metal == "")
+                {
+                    Console.WriteLine(landing.name + ", " + landing.id + ", " + landing.recclass.type + ", " + landing.mass + ", " + landing.fall + ", " + landing.year + ", " + landing.reclat + ", " + landing.reclong + ", (" + landing.GeoLocation.x + ", " + landing.GeoLocation.y + ")");
+                } else
+                {
+                    Console.WriteLine(landing.name + ", " + landing.id + ", (" + landing.recclass.metal + ", " + landing.recclass.type + "), " + landing.mass + ", " + landing.fall + ", " + landing.year + ", " + landing.reclat + ", " + landing.reclong + ", (" + landing.GeoLocation.x + ", " + landing.GeoLocation.y + ")");
+                }
+            }
+        }
     }
 }
