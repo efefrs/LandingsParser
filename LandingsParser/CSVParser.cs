@@ -9,7 +9,7 @@ using System.Net.WebSockets;
 
 namespace LandingsParser
 {
-    class CSVParser
+    public class CSVParser
     {
         public List<MeteoriteLanding> Landings = new List<MeteoriteLanding>();
         
@@ -17,7 +17,13 @@ namespace LandingsParser
         {
             return Landings;
         }
-
+        /*
+        parseCSV can parse any string that is at least:
+        name,,,,,,,,,
+        if the line being read is missing commas or doesn't have a name
+        there will be issues. More error handling could be implemented but 
+        due to time constraints we'll assume proper inputs
+        */
         public void parseCSV(string CSVLocation)
         {
             var reader = new StreamReader(CSVLocation);
@@ -135,7 +141,7 @@ namespace LandingsParser
                                     landingValueCount = 3; // next value will also need a special case
                                     break;
                                 case -2: // recclass (string) (two values is "metal, type") SPECIAL CASE
-                                    temp.recclass.type = value.ToString();
+                                    temp.recclass.type = value[1..].ToString(); // [1..] removes initial " " space
                                     landingValueCount = 3; // end of special cases for recclass
                                     break;
                             }

@@ -66,5 +66,40 @@ namespace LandingParserTests
             // overflow case
             // N/A
         }
+        [Test]
+        public void TestCSVParser()
+        {
+            // normal case
+            GeoLocationPair normalPair = new GeoLocationPair(29.037, 17.0185);
+            RecclassPair normalRecclassPair = new RecclassPair("", "L6");
+            MeteoriteLanding normalLanding = new MeteoriteLanding("Zillah 001", 31355, "Valid", normalRecclassPair, 1475, "Found", 1990, 29.037000, 17.018500, normalPair);
+            CSVParser normalParser = new CSVParser();
+            normalParser.parseCSV("../../../normal.csv");
+            if (normalParser.getData()[0] != normalLanding)
+            {
+                Assert.Fail();
+            }
+
+            // boundary case
+            GeoLocationPair boundaryPair = new GeoLocationPair(24.23333, 111.18333);
+            RecclassPair boundaryRecclassPair = new RecclassPair("Iron", "IAB complex");
+            MeteoriteLanding boundaryLanding = new MeteoriteLanding("Zhaoping", 54609, "Valid", boundaryRecclassPair, 2000000, "Found", 1983, 24.233330, 111.183330, boundaryPair);
+            CSVParser boundaryParser = new CSVParser();
+            boundaryParser.parseCSV("../../../boundary.csv");
+            if (boundaryParser.getData()[0] != boundaryLanding)
+            {
+                Assert.Fail();
+            }
+
+            // overflow case
+            MeteoriteLanding overflowLanding = new MeteoriteLanding();
+            overflowLanding.name = "Cacilandia";
+            CSVParser overflowParser = new CSVParser();
+            overflowParser.parseCSV("../../../overflow.csv");
+            if (overflowParser.getData()[0] != overflowLanding)
+            {
+                Assert.Fail();
+            }
+        }
     }
 }

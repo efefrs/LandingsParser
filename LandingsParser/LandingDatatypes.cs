@@ -77,5 +77,15 @@ namespace LandingsParser
             this.reclong = null;
             this.GeoLocation = new GeoLocationPair(null,null);
         }
+
+        public static bool operator ==(MeteoriteLanding c1, MeteoriteLanding c2)
+        {
+            return c1.Equals(c2);
+        }
+
+        public static bool operator !=(MeteoriteLanding c1, MeteoriteLanding c2)
+        {
+            return !c1.Equals(c2);
+        }
     }
 }
