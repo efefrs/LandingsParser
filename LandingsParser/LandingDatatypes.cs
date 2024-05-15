@@ -79,11 +79,14 @@ namespace LandingsParser
             this.GeoLocation = new GeoLocationPair(null,null);
         }
 
+        // need == definition for != definition to work
         public static bool operator ==(MeteoriteLanding c1, MeteoriteLanding c2)
         {
             return c1.Equals(c2);
         }
 
+        // needed for test cases
+        // followed from here: https://stackoverflow.com/questions/15199026/comparing-two-structs-using
         public static bool operator !=(MeteoriteLanding c1, MeteoriteLanding c2)
         {
             return !c1.Equals(c2);

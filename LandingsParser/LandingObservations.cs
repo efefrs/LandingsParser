@@ -13,9 +13,10 @@ namespace LandingsParser
         public LandingObservations(List<MeteoriteLanding> Landings) {
             this.Landings = new List<MeteoriteLanding>(Landings);
         }
-
-        // takes a list of meteorite landings (most likely parsed from a file)
-        // and makes observations that are printed to console based off that data
+        /*
+        takes a list of meteorite landings (most likely parsed from a file)
+        and makes observations that are printed to console based off that data
+        */
         public void observations()
         {
             KeyValuePair<string, int> commonMetal = mostCommonMetal();
@@ -47,6 +48,7 @@ namespace LandingsParser
 
             // followed from here: https://stackoverflow.com/questions/10290838/how-to-get-max-value-from-dictionary
             KeyValuePair<string, int> commonMetal = metalCount.MaxBy(entry => entry.Value);
+            // could have a case for if two metals tie but opting to keep code simple
 
             return commonMetal;
         }
@@ -70,6 +72,7 @@ namespace LandingsParser
             }
             int maxCount = metalCount.Values.Min();
             KeyValuePair<string, int> uncommonMetal = metalCount.MinBy(entry => entry.Value);
+            // could have a case for if two metals tie but opting to keep code simple
 
             return uncommonMetal;
         }

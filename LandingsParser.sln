@@ -5,7 +5,13 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandingsParser", "LandingsParser\LandingsParser.csproj", "{77655120-5217-49B7-BC63-C3BFAE98024D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandingParserTests", "LandingParserTests\LandingParserTests.csproj", "{D386BE12-1ED2-452A-BA49-1D28D0AC269F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandingParserTests", "LandingParserTests\LandingParserTests.csproj", "{D386BE12-1ED2-452A-BA49-1D28D0AC269F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C94DC5AB-040A-4D93-BF45-F66F28CF007C}"
+	ProjectSection(SolutionItems) = preProject
+		LandingParser UML Diagram.PNG = LandingParser UML Diagram.PNG
+		readme.txt = readme.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

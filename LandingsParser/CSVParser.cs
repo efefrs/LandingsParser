@@ -11,8 +11,10 @@ namespace LandingsParser
 {
     public class CSVParser
     {
-        // opted to have parseCSV as a separate function instead of called in constructor
-        // in case we choose to parse multiple files (they'll just get added to the Landings list)
+        /*
+        opted to have parseCSV as a separate function instead of called in constructor
+        in case we choose to parse multiple files (they'll just get added to the Landings list)
+        */
         private List<MeteoriteLanding> Landings = new List<MeteoriteLanding>();
         
         public List<MeteoriteLanding> getData()
@@ -33,18 +35,20 @@ namespace LandingsParser
             while (!reader.EndOfStream)
             {
                 /*
-                 Line gets broken into clusters
-                each cluster is before or after a '"'
+                Line gets broken into clusters
+                each new cluster starts after a '"'
                 So that will typically look like:
+                input string: Aachen, 1, Valid, L5, 21, Fell, 1880, 50.775000, 6.083330, "(50.775, 6.08333)"
                 cluster 0 (Data): "Aachen,1,Valid,L5,21,Fell,1880,50.775000,6.083330,"
                 cluster 1 (Geolocation): "(50.775, 6.08333)"
                 cluster 2: ""
 
                 or if the recclass includes metal along with type:
+                input string: Akyumak, 433, Valid, "Iron, IVA", 50000, Fell, 1981, 39.916670, 42.816670, "(39.91667, 42.81667)"
                 cluster 0 (Data): "Akyumak,433,Valid,"
-                cluster 1 (Recclass): "Iron, IVA"
+                cluster 1 (Recclass): "Iron,IVA"
                 cluster 2 (Data): ",50000,Fell,1981,39.916670,42.816670,"
-                cluster 3 (Geolocation): "(39.91667, 42.81667)"
+                cluster 3 (Geolocation): "(39.91667,42.81667)"
                 cluster 4: ""
 
                 We then break these clusters down and input them
@@ -56,7 +60,8 @@ namespace LandingsParser
                 MeteoriteLanding temp = new MeteoriteLanding();
                 foreach (String cluster in clusters)
                 {
-                    int clusterValueCounter = 0; // tracks the current input we are trying to enter for a value
+                    int clusterValueCounter = 0; // tracks the current input from the csv line that
+                                                 // we are trying to enter for a value
                     var values = cluster.Split(",");
                     foreach (var value in values)
                     {
@@ -69,20 +74,16 @@ namespace LandingsParser
                             || (landingValueCount == 4 && String.Equals(temp.recclass, "Unknown")))) 
                             for valid blank fields
 
-                        the way cluster.Split(",") happens we get a empty input before " and after "
-                        so we need to make sure to not count++ and input incorrectly on a "fake" blank input
+                        the way cluster.Split('"') happens we get an empty input after a '"'
+                        so we need to make sure to not landingValueCount++ and input incorrectly on a "fake" blank input
                         Hence why we look for valid blank fields instead of considering all blank values as valid
-                        since we know the last blank field in a cluster string is a parsing result,
+                        since we know the first blank field in a cluster string is often a result from .Split(),
                         not from the data
 
                         the else if statement is a bit complex because it needs to ensure that
-                        the given blank value isn't a blank starting value after a '"' due to
-                        how string splitting works, a blank ending value after a '"' due to how 
-                        splitting works, and while ensuring that blank mass values
-                        aren't ignored after an "Unkown" entry for recclass 
-                        (these are related, one happening usually means the other is also occurring)
-
-
+                        the given blank value isn't a blank starting value after a '"' due to how string splitting works
+                        and while ensuring that blank mass values aren't ignored after an "Unkown" entry for recclass.type (recclass.type being "Unkown" means that the mass value will be blank)
+                        Basically, we can have blank inputs, we just need to make sure it's from the data and not from how we are parsing the string
                          */
                         if (!(value == "")) // case for non-blank field
                         {
@@ -112,7 +113,7 @@ namespace LandingsParser
                                 case 2: // nametype (string)
                                     temp.nametype = value.ToString();
                                     break;
-                                case 3: // recclass (string) (single value is just type)
+                                case 3: // recclass (string) (if single value we just populate type)
                                     temp.recclass.type = value.ToString();
                                     break;
                                 case 4: // mass (int)
