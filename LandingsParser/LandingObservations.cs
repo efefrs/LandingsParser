@@ -92,17 +92,13 @@ namespace LandingsParser
 
         public void printLandings()
         {
-            internalPrintLandings(Landings);
-        }
-
-        private void internalPrintLandings(List<MeteoriteLanding> Landings)
-        {
             foreach (MeteoriteLanding landing in Landings)
             {
                 if (landing.recclass.metal == "")
                 {
                     Console.WriteLine(landing.name + ", " + landing.id + ", " + landing.recclass.type + ", " + landing.mass + ", " + landing.fall + ", " + landing.year + ", " + landing.reclat + ", " + landing.reclong + ", (" + landing.GeoLocation.x + ", " + landing.GeoLocation.y + ")");
-                } else
+                }
+                else
                 {
                     Console.WriteLine(landing.name + ", " + landing.id + ", (" + landing.recclass.metal + ", " + landing.recclass.type + "), " + landing.mass + ", " + landing.fall + ", " + landing.year + ", " + landing.reclat + ", " + landing.reclong + ", (" + landing.GeoLocation.x + ", " + landing.GeoLocation.y + ")");
                 }
